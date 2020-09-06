@@ -363,9 +363,6 @@ function Dropdown(Props) {
             paper: classes.Menupaper,
           }}
           style={{
-            // top: inputRef.current
-            //   ? inputRef.current.getBoundingClientRect().height
-            //   : undefined,
             overflowY: "hidden !important",
           }}
           onClose={() => {
