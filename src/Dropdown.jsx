@@ -267,7 +267,7 @@ function Dropdown(Props) {
                     style={{ display: "inline-block" }}
                   ></span>
                 ))}
-              {v[itemLabel]}
+              {v.name}
             </span>
           </MenuItem>
         ))}
