@@ -1,10 +1,10 @@
 {
   "name": "react-mui-multiselect-dropdown",
   "version": "1.0.0",
-  "description": "Made with create-react-library",
+  "description": "This is simple and light weight single/multiselect searchable dropdown",
   "author": "Bhushan Dhage",
   "license": "MIT",
-  "repository": "Bhushan Dhage/react-mui-multiselect-dropdown",
+  "repository": "https://github.com/bhushan90/react-mui-multiselect-dropdown/blob/master/README.md",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.js",
@@ -53,5 +53,20 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "keywords": [
+    "react-searchable-dropdown",
+    "react-dropdown",
+    "react-multiselect-dropdown",
+    "react-material-dropdown",
+    "react-material-multiselect-dropdown",
+    "react-material-searchable-dropdown"
+  ],
+  "dependencies": {
+    "react": "16.0.0",
+    "material-ui/core": "4.11.0",
+    "material-ui/icons": "4.9.1",
+    "classnames": "2.2.6"
+  },
+  "homepage": "https://github.com/bhushan90/react-mui-multiselect-dropdown"
 }

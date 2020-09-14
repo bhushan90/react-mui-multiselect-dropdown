@@ -86,6 +86,7 @@ function DemoDropdown() {
                 simpleValue
                 searchByValue='name'
                 itemValue='id'
+                title="Select Employee"
                 selectedValues={selectedEmployee}
                 customStyles={{
                   error: classes.error,
@@ -117,6 +118,7 @@ function DemoDropdown() {
                 imageLabel='path'
                 searchByValue='name'
                 itemValue='id'
+                title="Select Skills"
                 selectedValues={selectedSkills}
                 customStyles={{
                   error: classes.error,
@@ -144,16 +146,17 @@ function DemoDropdown() {
                 itemId='id'
                 itemLabel='city'
                 imageLabel='path'
+                title="Select City"
                 searchByValue='city'
                 showImage
-                selectedValues={selectedSkills}
+                selectedValues={selectedCities}
                 customStyles={{
                   error: classes.error,
                   checkBox: classes.checkBox
                 }}
                 errorText='error'
-                onItemClick={(records) => {
-                  setSelectedSkills(records)
+                onItemClick={(city) => {
+                  setSelectedCities(city)
                 }}
                 onDeleteItem={(deleted) => {
                   console.log('deleted', deleted)

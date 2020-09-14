@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from 'react'
 import {
   Input,
   InputAdornment,
@@ -10,54 +10,56 @@ import {
   Icon,
   FormHelperText,
   Avatar,
-} from "@material-ui/core";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import PropTypes from "prop-types";
-import ClearIcon from "@material-ui/icons/Clear";
-import CheckBoxOutlineBlankOutlinedIcon from "@material-ui/icons/CheckBoxOutlineBlankOutlined";
-import CheckBoxIcon from "@material-ui/icons/CheckBox";
-import green from "@material-ui/core/colors/green";
-import classNames from "classnames";
+  Typography
+} from '@material-ui/core'
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
+import PropTypes from 'prop-types'
+import ClearIcon from '@material-ui/icons/Clear'
+import CheckBoxOutlineBlankOutlinedIcon from '@material-ui/icons/CheckBoxOutlineBlankOutlined'
+import CheckBoxIcon from '@material-ui/icons/CheckBox'
+import green from '@material-ui/core/colors/green'
+import classNames from 'classnames'
 
 const useStyles = makeStyles((theme) => ({
   selectedItemsWrapper: {
-    display: "flex",
+    display: 'flex',
     flex: 1,
-    flexWrap: "wrap",
+    flexWrap: 'wrap'
   },
   selectedList: {
-    listStyle: "none",
-    padding: "3px 0",
+    listStyle: 'none',
+    padding: '3px 0'
   },
   checkBox: {
-    color: green["600"],
+    color: theme.palette.primary.main
   },
   chip: {
-    marginRight: "0.5em",
+    marginRight: '0.5em'
   },
   Menupaper: {
-    overflowY: "hidden !important",
+    overflowY: 'hidden !important'
   },
   artwork: {
-    width: "1em",
-    height: "1em",
-    marginLeft: "3px",
-    marginRight: "5px",
-  },
-}));
+    width: '1em',
+    height: '1em',
+    marginLeft: '3px',
+    marginRight: '5px'
+  }
+}))
 
 function Dropdown(Props) {
-  const [open, setOpen] = useState(false);
-  const [filteredValues, setFilteredValues] = useState([]);
-  const [selectedItems, setSelectedItems] = useState([]);
-  const [searchKeyword, setSearchKeyword] = useState("");
+  const [open, setOpen] = useState(false)
+  const [filteredValues, setFilteredValues] = useState([])
+  const [selectedItems, setSelectedItems] = useState([])
+  const [searchKeyword, setSearchKeyword] = useState('')
 
-  const inputRef = useRef();
-  const wrapperRef = useRef();
-  const classes = useStyles();
+  const inputRef = useRef()
+  const wrapperRef = useRef()
+  const classes = useStyles()
 
   const {
     fullWidth,
+    title,
     searchPlaceHolder,
     searchable,
     data,
@@ -77,110 +79,115 @@ function Dropdown(Props) {
     selectedValues,
     showImage,
     imageLabel,
-  } = Props;
+    allItemValue,
+    allItemId,
+    notFoundText
+  } = Props
 
   useEffect(() => {
-    if (multiple && showAllButton) {
-      data.unshift({ [itemId]: -1, [itemLabel]: "All" });
+    if (data && data.length > 0 && multiple && showAllButton) {
+      data.unshift({ [allItemId]: allItemValue, [itemLabel]: 'All' })
     }
     const values =
       !multiple && selectedValues.length > 1
         ? selectedValues.filter((_, i) => i === 0)
-        : selectedValues.concat();
-    setSelectedItems(values);
-    setFilteredValues(data);
-  }, [data]);
+        : selectedValues.concat()
+    setSelectedItems(values)
+    setFilteredValues(data)
+  }, [data])
 
   const handleClose = () => {
-    setOpen(false);
-    handleSearchKeyword("");
-  };
+    setOpen(false)
+    handleSearchKeyword('')
+  }
 
   const onItemSelect = async (item) => {
-    let selected = selectedItems;
-    let isAllSelected = false;
+    let selected = selectedItems
+    let isAllSelected = false
     if (multiple) {
-      if (item[itemId] === -1) {
-        item = filteredValues.filter((v) => v[itemId] !== -1);
-        isAllSelected = true;
+      if (item[allItemId] === allItemValue) {
+        item = filteredValues.filter((v) => v[allItemId] !== allItemValue)
+        isAllSelected = true
       }
       if (
         isAllSelected &&
-        item.length === selectedItems.filter((v) => v[itemId] !== -1).length
+        item.length ===
+          selectedItems.filter((v) => v[allItemId] !== allItemValue).length
       ) {
-        selected = [];
+        selected = []
       } else if (isItemSelected(item)) {
-        selected = selected.filter((v) => v[itemId] !== item[itemId]);
-        populateDeletedValue(item);
+        selected = selected.filter((v) => v[itemId] !== item[itemId])
+        populateDeletedValue(item)
       } else {
-        selected = isAllSelected ? item : [...selectedItems, item];
+        selected = isAllSelected ? item : [...selectedItems, item]
       }
     } else {
-      selected = [item];
+      selected = [item]
     }
-    setSelectedItems(selected);
-    populateSelectedValues(selected);
+    setSelectedItems(selected)
+    populateSelectedValues(selected)
     if (!multiple) {
-      handleClose();
+      handleClose()
     }
-  };
+  }
 
   const handleRemoveItem = (item) => {
     const filteredSelectedItems = selectedItems.filter(
       (v) => v[itemId] !== item[itemId]
-    );
-    setSelectedItems(filteredSelectedItems);
-    populateSelectedValues(filteredSelectedItems);
-    populateDeletedValue(item);
-  };
+    )
+    setSelectedItems(filteredSelectedItems)
+    populateSelectedValues(filteredSelectedItems)
+    populateDeletedValue(item)
+  }
 
   const removeAllSelectedItems = () => {
-    setSelectedItems([]);
-    populateSelectedValues([]);
-  };
+    setSelectedItems([])
+    populateSelectedValues([])
+  }
 
   const isItemSelected = (item) => {
     if (
-      item[itemId] === -1 &&
-      selectedItems.length === data.filter((v) => v[itemId] !== -1).length
+      item[allItemId] === allItemValue &&
+      selectedItems.length ===
+        data.filter((v) => v[allItemId] !== allItemValue).length
     ) {
-      return true;
+      return true
     }
-    return selectedItems.filter((v) => v[itemId] === item[itemId]).length > 0;
-  };
+    return selectedItems.filter((v) => v[itemId] === item[itemId]).length > 0
+  }
 
   const populateSelectedValues = (values) => {
-    let valuesToPopulate;
+    let valuesToPopulate
 
     if (values && values.length === 0) {
-      valuesToPopulate = simpleValue ? null : [];
+      valuesToPopulate = simpleValue ? null : []
     } else {
-      valuesToPopulate = simpleValue ? values.map((v) => v[itemValue]) : values;
-      valuesToPopulate = multiple ? valuesToPopulate : valuesToPopulate[0];
+      valuesToPopulate = simpleValue ? values.map((v) => v[itemValue]) : values
+      valuesToPopulate = multiple ? valuesToPopulate : valuesToPopulate[0]
     }
-    onItemClick(valuesToPopulate);
-  };
+    onItemClick(valuesToPopulate)
+  }
 
   const populateDeletedValue = (item) => {
-    const deletedValue = simpleValue ? item[itemValue] : item;
-    onDeleteItem(deletedValue);
-  };
+    const deletedValue = simpleValue ? item[itemValue] : item
+    onDeleteItem(deletedValue)
+  }
 
   const handleSearch = (keyword) => {
     let filtredResult = data.filter((v) =>
       v[searchByValue].toString().toLowerCase().includes(keyword)
-    );
-    const ignoreResult = data.filter((v) => v[itemId] === -1);
+    )
+    const ignoreResult = data.filter((v) => v[allItemId] === allItemValue)
     if (JSON.stringify(filtredResult) === JSON.stringify(ignoreResult)) {
-      filtredResult = [];
+      filtredResult = []
     }
-    setFilteredValues(filtredResult);
-  };
+    setFilteredValues(filtredResult)
+  }
 
   const handleSearchKeyword = (keyword) => {
-    setSearchKeyword(keyword);
-    handleSearch(keyword);
-  };
+    setSearchKeyword(keyword)
+    handleSearch(keyword)
+  }
 
   const searchSection = () =>
     searchable && (
@@ -190,13 +197,13 @@ function Dropdown(Props) {
           placeholder={searchPlaceHolder}
           value={searchKeyword}
           onChange={(e) => {
-            handleSearchKeyword(e.target.value);
+            handleSearchKeyword(e.target.value)
           }}
           style={{
             minWidth: wrapperRef.current
               ? wrapperRef.current.getBoundingClientRect().width
               : undefined,
-            padding: "0 5px",
+            padding: '0 5px'
           }}
           endAdornment={
             <InputAdornment>
@@ -205,37 +212,36 @@ function Dropdown(Props) {
                   centerRipple
                   tabIndex={-1}
                   onClick={() => {
-                    setSearchKeyword("");
-                    handleSearchKeyword("");
+                    setSearchKeyword('')
+                    handleSearchKeyword('')
                   }}
                 >
-                  <ClearIcon style={{ fontSize: "1.2em" }} />
+                  <ClearIcon style={{ fontSize: '1.2em' }} />
                 </ButtonBase>
               )}
             </InputAdornment>
           }
         />
       </div>
-    );
+    )
 
   const optionsSection = () => (
-    <div style={{ maxHeight: "300px", overflowY: "auto" }}>
-      {filteredValues &&
-        filteredValues.length > 0 &&
+    <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
+      {filteredValues && filteredValues.length > 0 ? (
         filteredValues.map((v) => (
           <MenuItem
             key={v[itemId]}
             onClick={() => {
-              onItemSelect(v);
+              onItemSelect(v)
             }}
             style={{
               minWidth: wrapperRef.current
                 ? wrapperRef.current.getBoundingClientRect().width
-                : undefined,
+                : undefined
             }}
           >
             {multiple && (
-              <Icon style={{ marginRight: "3px" }}>
+              <Icon style={{ marginRight: '3px' }}>
                 {isItemSelected(v) ? (
                   <CheckBoxIcon
                     className={classNames(
@@ -255,24 +261,27 @@ function Dropdown(Props) {
             )}
             <span>
               {showImage &&
-                (v[itemId] !== -1 ? (
+                (v[allItemId] !== allItemValue ? (
                   <img
                     className={classes.artwork}
                     src={v[imageLabel]}
-                    alt="img"
+                    alt='img'
                   />
                 ) : (
                   <span
                     className={classes.artwork}
-                    style={{ display: "inline-block" }}
-                  ></span>
+                    style={{ display: 'inline-block' }}
+                  />
                 ))}
               {v[itemLabel]}
             </span>
           </MenuItem>
-        ))}
+        ))
+      ) : (
+        <MenuItem>{notFoundText}</MenuItem>
+      )}
     </div>
-  );
+  )
 
   const selectedOptionSetion = () => (
     <div className={classes.selectedItemsWrapper}>
@@ -288,7 +297,7 @@ function Dropdown(Props) {
                 className={classes.chip}
                 label={item[itemLabel]}
                 onDelete={() => {
-                  handleRemoveItem(item);
+                  handleRemoveItem(item)
                 }}
               />
             ) : (
@@ -297,7 +306,7 @@ function Dropdown(Props) {
                   <img
                     className={classes.artwork}
                     src={item[imageLabel]}
-                    alt="img"
+                    alt='img'
                   />
                 )}
                 {item[itemLabel]}
@@ -306,16 +315,18 @@ function Dropdown(Props) {
           </li>
         ))}
     </div>
-  );
+  )
 
   return (
     <div ref={wrapperRef}>
+      <Typography> {title}</Typography>
       <Input
         error={error}
         inputComponent={selectedOptionSetion}
         fullWidth={fullWidth}
         disabled={disabled}
         readOnly
+        variant=''
         inputRef={inputRef}
         endAdornment={
           <InputAdornment disablePointerEvents={disabled}>
@@ -324,22 +335,22 @@ function Dropdown(Props) {
                 centerRipple
                 tabIndex={-1}
                 onClick={() => {
-                  removeAllSelectedItems();
+                  removeAllSelectedItems()
                 }}
               >
-                <ClearIcon style={{ fontSize: "1.2em" }} />
+                <ClearIcon style={{ fontSize: '1.2em' }} />
               </ButtonBase>
             )}
 
             <ButtonBase
               style={{
                 marginBottom:
-                  selectedItems && selectedItems.length > 0 ? 0 : "2em",
+                  selectedItems && selectedItems.length > 0 ? 0 : '2em'
               }}
               centerRipple
               tabIndex={-1}
               onClick={() => {
-                setOpen(true);
+                setOpen(true)
               }}
             >
               <ArrowDropDownIcon />
@@ -354,19 +365,19 @@ function Dropdown(Props) {
       )}
       {open && (
         <Menu
-          id="simple-menu"
+          id='simple-menu'
           anchorEl={wrapperRef.current}
           keepMounted
           open
-          variant="menu"
+          variant='menu'
           PopoverClasses={{
-            paper: classes.Menupaper,
+            paper: classes.Menupaper
           }}
           style={{
-            overflowY: "hidden !important",
+            overflowY: 'hidden !important'
           }}
           onClose={() => {
-            handleClose();
+            handleClose()
           }}
         >
           <span>
@@ -376,17 +387,20 @@ function Dropdown(Props) {
         </Menu>
       )}
     </div>
-  );
+  )
 }
 
 Dropdown.propTypes = {
   fullWidth: PropTypes.bool,
   searchable: PropTypes.bool,
+  title: PropTypes.string,
   searchPlaceHolder: PropTypes.string,
   data: PropTypes.array.isRequired,
   onItemClick: PropTypes.func.isRequired,
   itemLabel: PropTypes.string.isRequired,
   itemId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  allItemId: PropTypes.string,
+  allItemValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   multiple: PropTypes.bool,
   showAllButton: PropTypes.bool,
   simpleValue: PropTypes.bool,
@@ -399,32 +413,37 @@ Dropdown.propTypes = {
   selectedValues: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   imageLabel: PropTypes.string,
   errorText: PropTypes.string,
+  notFoundText: PropTypes.string,
   customStyles: PropTypes.shape({
     checkBox: PropTypes.string,
-    error: PropTypes.string,
-  }),
-};
+    error: PropTypes.string
+  })
+}
 Dropdown.defaultProps = {
   fullWidth: false,
   searchable: false,
-  searchPlaceHolder: "Search result",
-  itemId: "id",
+  title: 'Dropdown',
+  searchPlaceHolder: 'Search result',
+  itemId: 'id',
+  allItemId: 'id',
+  allItemValue: -1,
   multiple: false,
   showAllButton: true,
   simpleValue: false,
-  itemValue: "id",
+  itemValue: 'id',
   onDeleteItem: (a) => a,
-  searchByValue: "name",
+  searchByValue: 'name',
   disabled: false,
   error: false,
-  errorText: "",
+  errorText: 'Error',
   selectedValues: [],
   showImage: false,
-  imageLabel: "url",
+  imageLabel: 'url',
+  notFoundText: 'Not Found',
   customStyles: {
-    checkBox: "",
-    error: "",
-  },
-};
+    checkBox: '',
+    error: ''
+  }
+}
 
-export default Dropdown;
+export default Dropdown
