@@ -17,7 +17,6 @@ import PropTypes from 'prop-types'
 import ClearIcon from '@material-ui/icons/Clear'
 import CheckBoxOutlineBlankOutlinedIcon from '@material-ui/icons/CheckBoxOutlineBlankOutlined'
 import CheckBoxIcon from '@material-ui/icons/CheckBox'
-import green from '@material-ui/core/colors/green'
 import classNames from 'classnames'
 
 const useStyles = makeStyles((theme) => ({
@@ -203,7 +202,7 @@ function Dropdown(Props) {
             minWidth: wrapperRef.current
               ? wrapperRef.current.getBoundingClientRect().width
               : undefined,
-            padding: '0 5px'
+            paddingLeft: '13px'
           }}
           endAdornment={
             <InputAdornment>
@@ -284,7 +283,17 @@ function Dropdown(Props) {
   )
 
   const selectedOptionSetion = () => (
-    <div className={classes.selectedItemsWrapper}>
+    <div
+      className={classes.selectedItemsWrapper}
+      onClick={(e) => {
+        e.stopPropagation()
+        !disabled && setOpen(true)
+      }}
+      style={{
+        cursor: disabled ? '' : 'pointer',
+        height: selectedItems && selectedItems.length > 0 ? 'auto' : '1.3rem'
+      }}
+    >
       {selectedItems &&
         selectedItems.length > 0 &&
         selectedItems.map((item) => (
@@ -343,10 +352,6 @@ function Dropdown(Props) {
             )}
 
             <ButtonBase
-              style={{
-                marginBottom:
-                  selectedItems && selectedItems.length > 0 ? 0 : '2em'
-              }}
               centerRipple
               tabIndex={-1}
               onClick={() => {
