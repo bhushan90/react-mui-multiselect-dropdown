@@ -85,7 +85,7 @@ function Example() {
   const populateData = () => {
     const employeesData = [
       { id: 1, name: 'Klaus' },
-      { id: 2, name: 'Eliaja' },
+      { id: 2, name: 'Elijah' },
       { id: 3, name: 'Marcel' }
     ]
     setEmployees(employeesData)
