@@ -1,10 +1,11 @@
 
+
  # react-mui-multiselect-dropdown
 >It is simple and light weight single/multiselect searchable dropdown library.
 This package is built using popular react UI library which is material UI.
 
 ## Dependencies
-react: v-16.0.0,
+react: v-16.13.1,
 material-ui/core: v-4.11.0,
 material-ui/icons: v-4.9.1,
 classnames: "^2.2.6"
@@ -14,7 +15,7 @@ classnames: "^2.2.6"
 npm install --save react-mui-multiselect-dropdown
 ```
 ## Demo
-[here](https://stackblitz.com/edit/react-stpzqq)
+[here](https://stackblitz.com/edit/react-mui-multiselect-dropdown?file=src/DemoDropdown.jsx)
 
 ## Usage
 

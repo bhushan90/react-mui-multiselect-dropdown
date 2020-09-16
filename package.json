@@ -1,6 +1,6 @@
 {
   "name": "react-mui-multiselect-dropdown",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This is simple and light weight single/multiselect searchable dropdown",
   "author": "Bhushan Dhage",
   "license": "MIT",
@@ -24,7 +24,7 @@
     "deploy": "gh-pages -d example/build"
   },
   "peerDependencies": {
-    "react": "^16.0.0",
+    "react": "^16.13.1",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "fontsource-roboto": "^2.1.4",
@@ -63,9 +63,9 @@
     "react-material-searchable-dropdown"
   ],
   "dependencies": {
-    "react": "16.0.0",
-    "material-ui/core": "4.11.0",
-    "material-ui/icons": "4.9.1",
+    "react": "^16.13.1",
+    "@material-ui/core": "4.11.0",
+    "@material-ui/icons": "4.9.1",
     "classnames": "2.2.6"
   },
   "homepage": "https://github.com/bhushan90/react-mui-multiselect-dropdown"
