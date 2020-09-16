@@ -225,7 +225,13 @@ function Dropdown(Props) {
     )
 
   const optionsSection = () => (
-    <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
+    <div
+      style={{
+        maxHeight: '300px',
+        overflowY: 'auto',
+        overflowX: 'hidden'
+      }}
+    >
       {filteredValues && filteredValues.length > 0 ? (
         filteredValues.map((v) => (
           <MenuItem
