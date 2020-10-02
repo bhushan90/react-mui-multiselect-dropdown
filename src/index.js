@@ -173,6 +173,7 @@ function Dropdown(Props) {
   }
 
   const handleSearch = (keyword) => {
+    keyword = keyword ? keyword.toLowerCase() : keyword
     let filtredResult = data.filter((v) =>
       v[searchByValue].toString().toLowerCase().includes(keyword)
     )
